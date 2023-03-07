@@ -6,5 +6,6 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         logger.info("Hello, World!")
         server.pluginManager.registerEvents(EventListener, this)
+        getCommand("hello")?.setExecutor(HelloCommand)
     }
 }
