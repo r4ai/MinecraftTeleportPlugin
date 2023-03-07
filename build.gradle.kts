@@ -11,7 +11,7 @@ plugins {
     id("com.palantir.git-version") version "0.12.3"
     id("dev.s7a.gradle.minecraft.server") version "1.2.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("org.jmailen.kotlinter") version "3.8.0"
+    // id("org.jmailen.kotlinter") version "3.13.0" apply false
 }
 
 val gitVersion: Closure<String> by extra
@@ -32,18 +32,33 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:$pluginVersion-R0.1-SNAPSHOT")
 }
 
+// plugin.yml
 configure<BukkitPluginDescription> {
-    main = "@group@.Main"
+    main = "com.github.r4ai.Main"
     version = gitVersion()
     apiVersion = "1." + pluginVersion.split(".")[1]
+    commands {
+        register("hello") {
+            usage = "/<command>"
+            description = "Hello, World!"
+            aliases = listOf("hi")
+        }
+        register("teleport_near_player") {
+            description = "Teleportation command"
+            aliases = listOf("tpnear")
+            permission = "teleportplugin.teleport"
+            permissionMessage = "Permission denied. You need `teleportplugin.teleport` permission."
+            usage = "/teleport <pos-x> <pos-y> <pos-z>"
+        }
+    }
 }
 
 tasks.withType<ShadowJar> {
     configurations = listOf(shadowImplementation)
     archiveClassifier.set("")
-    relocate("kotlin", "@group@.libs.kotlin")
-    relocate("org.intellij.lang.annotations", "@group@.libs.org.intellij.lang.annotations")
-    relocate("org.jetbrains.annotations", "@group@.libs.org.jetbrains.annotations")
+    relocate("kotlin", "com.github.r4ai.libs.kotlin")
+    relocate("org.intellij.lang.annotations", "com.github.r4ai.libs.org.intellij.lang.annotations")
+    relocate("org.jetbrains.annotations", "com.github.r4ai.libs.org.jetbrains.annotations")
 }
 
 tasks.named("build") {

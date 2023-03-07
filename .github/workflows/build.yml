@@ -1,0 +1,17 @@
+name: "Build"
+on:
+  push:
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: "rai"
+          java-version: 17
+          cache: gradle
+      - name: Build with Gradle
+        run: ./gradlew build
