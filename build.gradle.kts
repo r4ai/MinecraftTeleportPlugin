@@ -50,6 +50,13 @@ configure<BukkitPluginDescription> {
             permissionMessage = "Permission denied. You need `teleportplugin.teleport` permission."
             usage = "/teleport <pos-x> <pos-y> <pos-z>"
         }
+        register("teleport_plugin") {
+            description = "Teleportation command"
+            aliases = listOf("tpplugin")
+            permission = "teleportplugin.teleport"
+            permissionMessage = "Permission denied. You need `teleportplugin.teleport` permission."
+            usage = "/<command> item|teleport"
+        }
     }
 }
 
