@@ -9,19 +9,21 @@ import org.bukkit.inventory.ShapedRecipe
 
 object HelloSword {
     fun item(): ItemStack {
-        val item = ItemStack(Material.DIAMOND_SWORD)
-        item.itemMeta?.apply {
-            setDisplayName("Hello, Sword!")
-            lore = listOf("This is a sword that says hello.")
-            isUnbreakable = true
-            addEnchant(Enchantment.DAMAGE_ALL, 5, true)
+        return ItemStack(Material.DIAMOND_SWORD).apply {
+            itemMeta = itemMeta?.apply {
+                setDisplayName("Hello, Sword!")
+                lore = listOf("This is a sword that says hello.")
+                isUnbreakable = true
+                addEnchant(Enchantment.DAMAGE_ALL, 5, true)
+            }
         }
-        return item
     }
 
     fun recipe(): Recipe {
-        val recipe = ShapedRecipe(NamespacedKey.minecraft("hello_sword"), item())
-        recipe.apply {
+        return ShapedRecipe(
+            NamespacedKey.minecraft("hello_sword"),
+            item()
+        ).apply {
             shape(
                 " D ",
                 "DDD",
@@ -30,6 +32,5 @@ object HelloSword {
             setIngredient('D', Material.DIAMOND)
             setIngredient('S', Material.STICK)
         }
-        return recipe
     }
 }

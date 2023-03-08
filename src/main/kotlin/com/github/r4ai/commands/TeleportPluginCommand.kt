@@ -1,6 +1,6 @@
 ﻿package com.github.r4ai.commands
 
-import com.github.r4ai.items.HelloSword
+import com.github.r4ai.items.ItemManager
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -34,7 +34,7 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
             1 -> listOf("item", "teleport").toMutableList()
 
             2 -> when (args[0]) {
-                "item" -> listOf("hello_sword").toMutableList()
+                "item" -> ItemManager.ids.toMutableList()
                 "teleport" -> listOf("0").toMutableList()
                 else -> null
             }
@@ -67,15 +67,20 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
             return false
         }
         val item = when (args[0]) {
-            "hello_sword" -> HelloSword.item()
+            in ItemManager.ids -> ItemManager.getItem(args[0]) ?: run {
+                sender.sendMessage("存在しないアイテムです")
+                sender.sendMessage("アイテム一覧: ${ItemManager.ids.joinToString(", ")}")
+                return true
+            }
+
             else -> {
                 sender.sendMessage("存在しないアイテムです")
-                sender.sendMessage("アイテム一覧: hello_sword")
+                sender.sendMessage("アイテム一覧: ${ItemManager.ids.joinToString(", ")}")
                 return true
             }
         }
         sender.inventory.addItem(item)
-        sender.sendMessage("${item.type.name}を手に入れました")
+        sender.sendMessage("${item.itemMeta?.displayName}を手に入れました")
         return true
     }
 
