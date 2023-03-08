@@ -4,8 +4,8 @@ import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerInteractEvent
 
-object TeleportFeather : CustomItem(
-    name = "Teleport Feather",
+object HomeTeleportFeather : CustomItem(
+    name = "Teleport Feather to Home",
     itemLore = listOf("Teleports you to the spawn point."),
     material = Material.FEATHER,
     recipeShape = listOf(

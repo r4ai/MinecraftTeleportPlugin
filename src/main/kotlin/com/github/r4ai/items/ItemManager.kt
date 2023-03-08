@@ -12,7 +12,7 @@ object ItemManager {
 
     fun getObject(id: String): CustomItem? = when (id) {
         "hello_sword" -> HelloSword
-        "teleport_feather" -> TeleportFeather
+        "teleport_feather" -> HomeTeleportFeather
         else -> null
     }
 
@@ -32,7 +32,7 @@ object ItemManager {
         if (obj != null && item != null && recipe != null) {
             plugin.server.addRecipe(recipe)
             plugin.server.pluginManager.registerEvents(obj, plugin)
-            plugin.logger.info("registered item ${item.itemMeta?.displayName}")
+            plugin.logger.info("registered item ${obj.itemId}")
         }
     }
 }
