@@ -23,7 +23,7 @@ object HomeTeleportFeather : CustomItem(
     fun onLeftClick(e: PlayerInteractEvent) {
         val p = e.player
         val item = e.item ?: return
-        if (this.isMatch(item) && e.action.name.contains("LEFT")) {
+        if (this.isMatch(item) && e.action.name.contains("RIGHT")) {
             e.isCancelled = true
             val location = p.bedSpawnLocation ?: p.world.spawnLocation
             p.teleport(location)

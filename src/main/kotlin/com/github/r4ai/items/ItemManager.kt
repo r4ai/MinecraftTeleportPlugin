@@ -5,25 +5,20 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
 object ItemManager {
-    val ids = listOf(
-        "hello_sword",
-        "teleport_feather"
+    val objects = listOf(
+        HelloSword,
+        HomeTeleportFeather
     )
+    val ids = objects.map { it.itemId }
 
-    fun getObject(id: String): CustomItem? = when (id) {
-        "hello_sword" -> HelloSword
-        "teleport_feather" -> HomeTeleportFeather
-        else -> null
-    }
+    fun getObject(id: String): CustomItem? = objects.find { it.itemId == id }
 
     fun getItem(id: String): ItemStack? = getObject(id)?.getItem()
 
     fun getRecipe(id: String): Recipe? = getObject(id)?.getRecipe()
 
     fun init() {
-        ids.forEach { id ->
-            registerItem(getObject(id))
-        }
+        objects.forEach { registerItem(it) }
     }
 
     private fun registerItem(obj: CustomItem?) {
