@@ -14,7 +14,7 @@ class Main : JavaPlugin() {
     private fun registerCommand(label: String, executor: CommandExecutor) {
         getCommand(label)?.run {
             this.setExecutor(executor)
-            logger.info("/$label を登録しました")
-        } ?: logger.severe("/$label を登録できませんでした")
+            logger.info("registered /$label")
+        } ?: logger.severe("Failed to register /$label")
     }
 }
