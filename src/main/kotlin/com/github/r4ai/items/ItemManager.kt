@@ -5,10 +5,17 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
 object ItemManager {
-    val objects = listOf(
+    // ! CHANGE REQUIRED !
+    // when you add new item, add it to this list
+    private val objects = listOf(
         HelloSword,
-        HomeTeleportFeather
+        HomeTeleportFeather,
+        MagicMoveWand
     )
+
+    // ===================================
+    // ! BELOW IS NOT REQUIRED TO CHANGE !
+
     val ids = objects.map { it.itemId }
 
     fun getObject(id: String): CustomItem? = objects.find { it.itemId == id }

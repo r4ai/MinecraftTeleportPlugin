@@ -20,7 +20,7 @@ object HomeTeleportFeather : CustomItem(
     itemIsUnbreakable = true
 ) {
     @EventHandler
-    fun onLeftClick(e: PlayerInteractEvent) {
+    fun onRightClick(e: PlayerInteractEvent) {
         val p = e.player
         val item = e.item ?: return
         if (this.isMatch(item) && e.action.name.contains("RIGHT")) {

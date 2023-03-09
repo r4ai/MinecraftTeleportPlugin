@@ -13,6 +13,8 @@ import org.bukkit.persistence.PersistentDataType
  * This class is a template for creating custom items.
  * To create a custom item, create a new class that extends this class.
  *
+ * ## Constructor parameters
+ *
  * @param name: The name of the item. Must be [a-z0-9/._-] and unique.
  * @param itemLore: The lore of the item.
  * @param material: The material of the item.
@@ -20,6 +22,8 @@ import org.bukkit.persistence.PersistentDataType
  * @param recipeIngredients: The ingredients of the recipe.
  * @param itemIsUnbreakable: Whether the item is unbreakable.
  *                           If null, the item will be unbreakable if it was unbreakable before.
+ *
+ * ## Utility methods
  *
  * @method getItem(): Returns the item.
  * @method getRecipe(): Returns the recipe.

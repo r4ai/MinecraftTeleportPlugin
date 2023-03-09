@@ -1,0 +1,37 @@
+﻿package com.github.r4ai.items
+
+import org.bukkit.Material
+import org.bukkit.event.EventHandler
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.util.Vector
+
+object MagicMoveWand : CustomItem(
+    name = "Magic Move Wand",
+    itemLore = listOf("This is a wand that moves you."),
+    material = Material.STICK,
+    recipeShape = listOf(
+        " D ",
+        " G ",
+        " I "
+    ),
+    recipeIngredients = mapOf(
+        'D' to Material.DIAMOND,
+        'G' to Material.GOLD_INGOT,
+        'I' to Material.IRON_INGOT
+    ),
+    itemIsUnbreakable = true
+) {
+    // Jump forward 6 blocks
+    @EventHandler
+    fun onRightClick(e: PlayerInteractEvent) {
+        val p = e.player
+        val item = e.item ?: return
+        if (this.isMatch(item) && e.action.name.contains("RIGHT")) {
+            e.isCancelled = true
+            val orientation = p.location.direction
+            val velocity =
+                Vector(orientation.x, 0.5, orientation.z).normalize().multiply(3)
+            p.velocity = velocity
+        }
+    }
+}
