@@ -1,4 +1,4 @@
-package com.github.r4ai.commands
+package com.github.r4ai.commands.sandbox
 
 import org.bukkit.Bukkit
 import org.bukkit.Location

@@ -1,6 +1,8 @@
 ﻿package com.github.r4ai.items
 
 import com.github.r4ai.Main.Companion.plugin
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
 
@@ -26,6 +28,19 @@ object ItemManager {
 
     fun init() {
         objects.forEach { registerItem(it) }
+    }
+
+    fun tabCompletion(
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
+    ): MutableList<String>? {
+        return when (args.size) {
+            1 -> ids.toMutableList()
+            in 2..Int.MAX_VALUE -> mutableListOf()
+            else -> null
+        }
     }
 
     private fun registerItem(obj: CustomItem?) {

@@ -23,6 +23,27 @@ configure<BukkitPluginDescription> {
 
 `:25565` でテストサーバーを起動します。
 
+#### テストサーバーのリロード (ubuntu)
+
+起動～リロード～停止:
+
+```bash
+$ pwd
+~/src/minecraft_dev_server
+
+$ do start
+Creating Minecraft session...
+Starting Minecraft server on the session...
+
+# Before reload, you need to build the plugin.
+$ do reload
+Reloading MinecraftTleportPlugin...
+
+$ do stop
+Stopping Minecraft server...
+Killing Minecraft session...
+```
+
 ## References
 
 ### Official Documents

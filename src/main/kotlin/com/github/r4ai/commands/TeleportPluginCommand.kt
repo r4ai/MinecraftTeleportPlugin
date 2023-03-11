@@ -1,7 +1,6 @@
 ﻿package com.github.r4ai.commands
 
 import com.github.r4ai.items.ItemManager
-import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -9,6 +8,11 @@ import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
 object TeleportPluginCommand : CommandExecutor, TabCompleter {
+    val subCommands = mutableListOf(
+        "item",
+        "exec"
+    )
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
             sender.sendMessage("引数が不正です")
@@ -16,7 +20,7 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
         }
         return when (args[0]) {
             "item" -> item(sender, command, args[0], args.sliceArray(1 until args.size))
-            "teleport" -> teleport(sender, command, args[0], args.sliceArray(1 until args.size))
+            "exec" -> exec(sender, command, args[0], args.sliceArray(1 until args.size))
             else -> {
                 sender.sendMessage("引数が不正です")
                 false
@@ -27,34 +31,25 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
     override fun onTabComplete(
         sender: CommandSender,
         command: Command,
-        alias: String,
+        label: String,
         args: Array<out String>
     ): MutableList<String>? {
-        return when (args.size) {
-            1 -> listOf("item", "teleport").toMutableList()
+        if (args.isEmpty()) return null
+        if (args.size == 1) return subCommands
+        if (args.size >= 2) {
+            return when (args[0]) {
+                "item" -> ItemManager.tabCompletion(
+                    sender, command, args[0], args.sliceArray(1 until args.size)
+                )
 
-            2 -> when (args[0]) {
-                "item" -> ItemManager.ids.toMutableList()
-                "teleport" -> listOf("0").toMutableList()
+                "exec" -> CommandManager.tabCompletion(
+                    sender, command, args[0], args.sliceArray(1 until args.size)
+                )
+
                 else -> null
             }
-
-            3 -> when (args[0]) {
-                "item" -> emptyList<String>().toMutableList()
-                "teleport" -> listOf("0").toMutableList()
-                else -> null
-            }
-
-            4 -> when (args[0]) {
-                "item" -> emptyList<String>().toMutableList()
-                "teleport" -> listOf("0").toMutableList()
-                else -> null
-            }
-
-            in 5..Int.MAX_VALUE -> emptyList<String>().toMutableList()
-
-            else -> null
         }
+        return null
     }
 
     private fun item(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -84,24 +79,30 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
         return true
     }
 
-    private fun teleport(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
-        if (sender !is Player) {
-            sender.sendMessage("このコマンドはプレイヤーのみが実行できます")
-            return true
-        }
-        if (args.size != 3) {
+    private fun exec(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (args.isEmpty()) {
             sender.sendMessage("引数の数が違います")
             return false
         }
-        val xyz = args.map {
-            it.toDoubleOrNull() ?: run {
-                sender.sendMessage("引数が不正です")
-                return false
+
+        when (args[0]) {
+            in CommandManager.labels -> {
+                val commandObject = CommandManager.getCommand(args[0]) ?: run {
+                    sender.sendMessage("存在しないコマンドです")
+                    sender.sendMessage("コマンド一覧: ${CommandManager.labels.joinToString(", ")}")
+                    return true
+                }
+                commandObject.onCommand(
+                    sender, command, args[0], args.sliceArray(1 until args.size)
+                )
+            }
+
+            else -> {
+                sender.sendMessage("存在しないコマンドです")
+                sender.sendMessage("コマンド一覧: ${CommandManager.labels.joinToString(", ")}")
+                return true
             }
         }
-        val location = Location(sender.world, xyz[0], xyz[1], xyz[2])
-        sender.teleport(location)
-        sender.sendMessage("`${xyz[0]}, ${xyz[1]}, ${xyz[2]}`へテレポートしました")
         return true
     }
 }
