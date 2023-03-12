@@ -12,7 +12,8 @@ object ItemManager {
     private val objects = listOf(
         HelloSword,
         HomeTeleportFeather,
-        MagicMoveWand
+        MagicMoveWand,
+        TeleportBerry
     )
 
     // ===================================

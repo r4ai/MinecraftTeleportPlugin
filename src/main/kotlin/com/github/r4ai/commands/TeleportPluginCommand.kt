@@ -97,6 +97,19 @@ object TeleportPluginCommand : CommandExecutor, TabCompleter {
                 )
             }
 
+            in CommandManager.aliases -> {
+                val commandObject = CommandManager.getLabel(args[0])
+                    ?.let { CommandManager.getCommand(it) }
+                    ?: run {
+                        sender.sendMessage("存在しないコマンドです")
+                        sender.sendMessage("コマンド一覧: ${CommandManager.labels.joinToString(", ")}")
+                        return true
+                    }
+                commandObject.onCommand(
+                    sender, command, args[0], args.sliceArray(1 until args.size)
+                )
+            }
+
             else -> {
                 sender.sendMessage("存在しないコマンドです")
                 sender.sendMessage("コマンド一覧: ${CommandManager.labels.joinToString(", ")}")

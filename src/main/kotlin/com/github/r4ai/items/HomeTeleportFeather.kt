@@ -1,5 +1,7 @@
 ﻿package com.github.r4ai.items
 
+import com.github.r4ai.commands.Home
+import com.github.r4ai.utils.ExecuteCommand.executeCommand
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerInteractEvent
@@ -25,7 +27,7 @@ object HomeTeleportFeather : CustomItem(
         val item = e.item ?: return
         if (this.isMatch(item) && e.action.name.contains("RIGHT")) {
             e.isCancelled = true
-            p.performCommand("home")
+            executeCommand(p, listOf(Home))
         }
     }
 }

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player
 object Teleport : CustomCommand(
     label = "teleport",
     aliases = listOf("tp"),
-    command = fun(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+    command = fun(sender: CommandSender, _: Command, _: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
             sender.sendMessage("このコマンドはプレイヤーのみが実行できます")
             return true

@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.util.Vector
 
+// TODO: Cool down for teleporting
 object MagicMoveWand : CustomItem(
     name = "Magic Move Wand",
     itemLore = listOf("This is a wand that moves you."),

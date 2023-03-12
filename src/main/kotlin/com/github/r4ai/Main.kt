@@ -1,8 +1,8 @@
 package com.github.r4ai
 
 import com.github.r4ai.commands.TeleportPluginCommand
-import com.github.r4ai.commands.sandbox.HelloCommand
-import com.github.r4ai.commands.sandbox.TeleportCommand
+import com.github.r4ai.commands.old.HelloCommand
+import com.github.r4ai.commands.old.TeleportCommand
 import com.github.r4ai.items.ItemManager
 import org.bukkit.command.CommandExecutor
 import org.bukkit.plugin.PluginDescriptionFile
