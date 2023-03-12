@@ -1,4 +1,4 @@
-package com.github.r4ai.commands
+package com.github.r4ai.commands.old
 
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

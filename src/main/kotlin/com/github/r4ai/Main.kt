@@ -1,13 +1,27 @@
 package com.github.r4ai
 
-import com.github.r4ai.commands.HelloCommand
-import com.github.r4ai.commands.TeleportCommand
 import com.github.r4ai.commands.TeleportPluginCommand
+import com.github.r4ai.commands.old.HelloCommand
+import com.github.r4ai.commands.old.TeleportCommand
 import com.github.r4ai.items.ItemManager
 import org.bukkit.command.CommandExecutor
+import org.bukkit.plugin.PluginDescriptionFile
 import org.bukkit.plugin.java.JavaPlugin
+import org.bukkit.plugin.java.JavaPluginLoader
+import java.io.File
 
-class Main : JavaPlugin() {
+class Main : JavaPlugin {
+    // === Codes for MockBukkit ===
+    constructor() : super()
+
+    constructor(loader: JavaPluginLoader, description: PluginDescriptionFile, dataFolder: File, file: File) : super(
+        loader,
+        description,
+        dataFolder,
+        file
+    )
+    // ============================
+
     companion object {
         lateinit var plugin: JavaPlugin
             private set

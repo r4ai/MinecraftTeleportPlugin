@@ -22,6 +22,8 @@ repositories {
     mavenCentral()
     maven(url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven(url = "https://oss.sonatype.org/content/groups/public/")
+    maven(url = "https://jitpack.io")
+    maven(url = "https://repo.papermc.io/repository/maven-public/")
 }
 
 val shadowImplementation: Configuration by configurations.creating
@@ -29,6 +31,8 @@ configurations["implementation"].extendsFrom(shadowImplementation)
 
 dependencies {
     shadowImplementation(kotlin("stdlib"))
+    implementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    implementation("com.github.MockBukkit:MockBukkit:v1.16-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:$pluginVersion-R0.1-SNAPSHOT")
 }
 
@@ -55,7 +59,7 @@ configure<BukkitPluginDescription> {
             aliases = listOf("tpplugin")
             permission = "teleportplugin.teleport"
             permissionMessage = "Permission denied. You need `teleportplugin.teleport` permission."
-            usage = "/<command> item|teleport"
+            usage = "/<command> item|exec|teleport"
         }
     }
 }

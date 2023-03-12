@@ -37,6 +37,7 @@ open class CustomItem(
     private val recipeShape: List<String>,
     private val recipeIngredients: Map<Char, Material>,
     private val itemIsUnbreakable: Boolean? = null,
+    private val dataContainers: Map<String, Map<PersistentDataType<Any, Any>, Any>> = mapOf()
 ) : Listener {
     val itemId = name.lowercase().replace(' ', '_')
     val itemNamespacedKey = NamespacedKey(Main.plugin, itemId)
@@ -48,6 +49,16 @@ open class CustomItem(
                 lore = itemLore
                 isUnbreakable = itemIsUnbreakable ?: isUnbreakable
                 persistentDataContainer.set(itemNamespacedKey, PersistentDataType.BYTE, 1)
+
+                dataContainers.forEach { (key, data) ->
+                    val type = data.keys.first()
+                    val value = data.values.first()
+                    if (type.complexType::class.java.typeName == value::class.java.typeName) {
+                        persistentDataContainer.set(NamespacedKey(Main.plugin, key), type, value)
+                    } else {
+                        Main.plugin.logger.warning("Item: $name, Data type mismatch for $key")
+                    }
+                }
             }
         }
     }
