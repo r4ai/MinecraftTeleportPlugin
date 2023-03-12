@@ -1,5 +1,7 @@
 # MinecraftTeleportPlugin
 
+A simple plugin which adds some items, commands and events to teleport players.
+
 ## Development
 
 ### plugin.yml
