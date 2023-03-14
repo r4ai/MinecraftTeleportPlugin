@@ -2,6 +2,10 @@
 
 A simple plugin which adds some items, commands and events to teleport players.
 
+Supported versions:
+
+- 1.16.5
+
 ## Development
 
 ### plugin.yml
