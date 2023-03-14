@@ -1,8 +1,10 @@
 ﻿package com.github.r4ai.items
 
 import com.github.r4ai.Main
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
+import org.bukkit.World
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
@@ -72,10 +74,72 @@ open class CustomItem(
         }
     }
 
+    /**
+     * Check if the given item is the same as this item.
+     */
     fun isMatch(item: ItemStack): Boolean {
         return item.type == material && item.itemMeta?.persistentDataContainer?.has(
             itemNamespacedKey,
             PersistentDataType.BYTE
         ) == true
+    }
+
+    /**
+     * Convert location to long array.
+     * - `array[0] = x`
+     * - `array[1] = y`
+     * - `array[2] = z`
+     */
+    fun locationToLongArray(location: Location): LongArray {
+        return longArrayOf(
+            location.x.toLong(),
+            location.y.toLong(),
+            location.z.toLong()
+        )
+    }
+
+    /**
+     * Convert long array to location.
+     * - `x = array[0]`
+     * - `y = array[1]`
+     * - `z = array[2]`
+     */
+    fun longArrayToLocation(world: World, longArray: LongArray): Location {
+        return Location(
+            world,
+            longArray[0].toDouble(),
+            longArray[1].toDouble(),
+            longArray[2].toDouble()
+        )
+    }
+
+    /**
+     * Get location from item persistent data.
+     * If the item does not have a location, return null.
+     */
+    fun getLocationFromItem(world: World, item: ItemStack): Location? {
+        val tpLocation = item.itemMeta?.persistentDataContainer?.get(
+            NamespacedKey(Main.plugin, "tp_location"),
+            PersistentDataType.LONG_ARRAY
+        ) ?: return null
+        return longArrayToLocation(world, tpLocation)
+    }
+
+    /**
+     * Save location to item persistent data.
+     * - If failed, return null.
+     * - If successful, return the location converted to long array.
+     */
+    fun saveLocationToItem(item: ItemStack, location: Location): LongArray? {
+        val tpLocation = locationToLongArray(location)
+        item.itemMeta = item.itemMeta?.apply {
+            lore = listOf("Teleports you to ${tpLocation[0]}, ${tpLocation[1]}, ${tpLocation[2]}")
+            persistentDataContainer.set(
+                NamespacedKey(Main.plugin, "tp_location"),
+                PersistentDataType.LONG_ARRAY,
+                tpLocation
+            )
+        } ?: return null
+        return tpLocation
     }
 }

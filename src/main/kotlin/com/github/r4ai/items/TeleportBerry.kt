@@ -1,12 +1,10 @@
 ﻿package com.github.r4ai.items
 
-import com.github.r4ai.Main.Companion.plugin
-import org.bukkit.*
+import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerItemConsumeEvent
-import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
 
 object TeleportBerry : CustomItem(
     name = "Teleport Berry",
@@ -36,11 +34,7 @@ object TeleportBerry : CustomItem(
             val clickedBlockLocation = e.clickedBlock?.location ?: return
             val oldTpLocation = getLocationFromItem(p.world, item).let {
                 if (it == null) null
-                else longArrayOf(
-                    it.x.toLong(),
-                    it.y.toLong(),
-                    it.z.toLong()
-                )
+                else locationToLongArray(it)
             }
             val tpLocation = saveLocationToItem(item, clickedBlockLocation) ?: return
             if (oldTpLocation != null && oldTpLocation contentEquals tpLocation) return
@@ -75,35 +69,5 @@ object TeleportBerry : CustomItem(
         ) {
             p.world.spawnParticle(Particle.SPELL_WITCH, p.location, 20, 0.5, 1.0, 0.5)
         }
-    }
-
-    private fun saveLocationToItem(item: ItemStack, location: Location): LongArray? {
-        val tpLocation = longArrayOf(
-            location.x.toLong(),
-            location.y.toLong(),
-            location.z.toLong()
-        )
-        item.itemMeta = item.itemMeta?.apply {
-            lore = listOf("Teleports you to ${tpLocation[0]}, ${tpLocation[1]}, ${tpLocation[2]}")
-            persistentDataContainer.set(
-                NamespacedKey(plugin, "tp_location"),
-                PersistentDataType.LONG_ARRAY,
-                tpLocation
-            )
-        } ?: return null
-        return tpLocation
-    }
-
-    private fun getLocationFromItem(world: World, item: ItemStack): Location? {
-        val tpLocation = item.itemMeta?.persistentDataContainer?.get(
-            NamespacedKey(plugin, "tp_location"),
-            PersistentDataType.LONG_ARRAY
-        ) ?: return null
-        return Location(
-            world,
-            tpLocation[0].toDouble(),
-            tpLocation[1].toDouble(),
-            tpLocation[2].toDouble()
-        )
     }
 }
