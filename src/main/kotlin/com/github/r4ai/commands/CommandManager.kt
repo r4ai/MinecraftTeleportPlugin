@@ -9,7 +9,8 @@ object CommandManager {
     private val objects = listOf(
         Home,
         Teleport,
-        Hello
+        Hello,
+        TeleportDelay
     )
     // ===================================
 

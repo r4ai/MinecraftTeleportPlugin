@@ -8,7 +8,7 @@ import org.bukkit.inventory.Recipe
 
 object ItemManager {
     // ! CHANGE REQUIRED !
-    // when you add new item, add it to this list
+    // When you created new item, add it to this list
     private val objects = listOf(
         HelloSword,
         HomeTeleportFeather,
@@ -50,7 +50,7 @@ object ItemManager {
         if (obj != null && item != null && recipe != null) {
             plugin.server.addRecipe(recipe)
             plugin.server.pluginManager.registerEvents(obj, plugin)
-            plugin.logger.info("registered item ${obj.itemId}")
+            plugin.logger.info("Registered item ${obj.itemId}")
         }
     }
 }
