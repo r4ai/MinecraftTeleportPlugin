@@ -86,5 +86,5 @@ private fun getToTpLocation(player: Player, args: Array<out String>): Location? 
 
 
 private fun spawnTpParticle(player: Player) {
-    player.world.spawnParticle(Particle.SPELL_WITCH, player.location, 100, 0.5, 1.0, 0.5)
+    player.world.spawnParticle(Particle.SPELL_WITCH, player.location, 20, 0.5, 1.0, 0.5)
 }

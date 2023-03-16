@@ -22,7 +22,7 @@ object Home : CustomCommand(
         }
 
         // Generate particles
-        sender.world.spawnParticle(Particle.SPELL_WITCH, sender.location, 100, 0.5, 1.0, 0.5)
+        sender.world.spawnParticle(Particle.SPELL_WITCH, sender.location, 20, 0.5, 1.0, 0.5)
         sender.sendMessage("Teleporting to home...")
 
         // Teleport after 1 second

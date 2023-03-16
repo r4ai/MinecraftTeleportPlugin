@@ -67,7 +67,7 @@ object TeleportBerry : CustomItem(
             ((e.action.name == "LEFT_CLICK_BLOCK" && p.isSneaking)
                     || (e.action.name.contains("RIGHT")))
         ) {
-            p.world.spawnParticle(Particle.SPELL_WITCH, p.location, 20, 0.5, 1.0, 0.5)
+            p.world.spawnParticle(Particle.SPELL_WITCH, p.location, 10, 0.5, 1.0, 0.5)
         }
     }
 }
